@@ -89,14 +89,17 @@ export const signOut = async (req, res) => {
         // lấy refresh token từ cookie
         const token = req.cookies?.refreshToken;
 
+
+
+        // xoá refresh token từ session
         if (token) {
-            // xoá refresh token từ cookie
+            // xoá refresh token từ session
             await Session.deleteOne({ refreshToken: token });
             // xoá cookie
-            res.clearCookie('refreshToken');
+            res.clearCookie('refreshToken'); // xoá cookie trong trình duyệt
         }
 
-        return res.status(204);
+        return res.status(204); 
     } catch (error) {
         console.error("Error signing out", error);
         return res.status(500).json({ message: "Internal server error"});
